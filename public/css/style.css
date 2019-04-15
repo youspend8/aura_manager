@@ -1,0 +1,62 @@
+
+
+.card {
+  padding: 0;
+}
+
+.dashboard .card {
+  padding: 10px;
+  color: RGB(36,49,57);
+  background-color: RGB(36,49,57);
+  border-style: none;
+  box-shadow: none;
+}
+
+.card-header {
+  background-color: RGB(48,61,71);
+  color: white;
+}
+
+.card-body {
+  background-color: RGB(48,61,71);
+  color: white;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 800 !important;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard {
+  background-color: RGB(36,49,57);
+}
+
+.page-body {
+  background-color: RGB(36,49,57);
+}
+
+td {
+  vertical-align: middle !important;
+}
+
+@media (min-width: 768.01px) {
+  .content-area {
+    width: calc(100% - 240px);
+  }
+  #sidebar {
+    width: 240px;
+    height: 100vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-area {
+    width: calc(100% - 60px);
+  }
+  #sidebar {
+    width: 47px;
+    height: 100vh;
+  }
+}
