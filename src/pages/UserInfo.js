@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import UserInfoTable from 'components/userInfo/UserInfoTable';
+import PageHeader from 'commons/PageHeader';
 
 const myStyle = {
   select: {
@@ -29,32 +30,25 @@ export default class UserInfo extends Component {
 
   render() {
     return (
-      <div class="card content-area">
-        <div class="card-header dashboard">
-          <h5 class="card-title m-0">
-            유저정보
-          </h5>
-        </div>
-        <div class="card-body page-body px-5 d-flex justify-content-center" style={{backgroundColor: '#e1e6ed'}}>
-          <div class="col-8 text-center">
-            
-            <UserInfoTable />
+      <div class="card-body page-body px-5 d-flex justify-content-center" style={{backgroundColor: '#e1e6ed'}}>
+        <div class="col-8 text-center">
+          
+          <UserInfoTable />
 
-            <form id="RepostForm" class="form-inline justify-content-center">
-              <select class="form-control" style={myStyle.select}>
-                <option value="0">{this.state.repostType[0]}</option>
-                <option value="1">{this.state.repostType[1]}</option>
-                <option value="2">{this.state.repostType[2]}</option>
-              </select>
-              <input type="submit" class="btn btn-danger" value="회원 제재하기"></input>
-              <input type="button" class="btn indigo" value="회원정보수정"></input>
-            </form>
+          <form id="RepostForm" class="form-inline justify-content-center">
+            <select class="form-control" style={myStyle.select}>
+              <option value="0">{this.state.repostType[0]}</option>
+              <option value="1">{this.state.repostType[1]}</option>
+              <option value="2">{this.state.repostType[2]}</option>
+            </select>
+            <input type="submit" class="btn btn-danger" value="회원 제재하기"></input>
+            <input type="button" class="btn indigo" value="회원정보수정"></input>
+          </form>
 
-            <div class="mt-5">
-              <a href="#" class="text-danger">회원탈퇴</a>
-            </div>
-
+          <div class="mt-5">
+            <a href="#" class="text-danger">회원탈퇴</a>
           </div>
+
         </div>
       </div>
     );

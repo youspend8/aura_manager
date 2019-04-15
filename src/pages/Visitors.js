@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
+import PageHeader from 'commons/PageHeader';
 
 const data = {
   labels: [
@@ -52,15 +53,8 @@ const options = {
 export default class Visitors extends Component {
   render() {
     return (
-      <div class="card content-area">
-        <div class="card-header dashboard">
-          <h5 class="card-title m-0">
-            방문자 통계
-          </h5>
-        </div>
-        <div class="card-body d-flex flex-wrap dashboard px-2 bg-white">
-          <Line ref="chart" data={data} options={options} />
-        </div>
+      <div class="card-body d-flex flex-wrap dashboard px-2 bg-white">
+        <Line ref="chart" data={data} options={options} />
       </div>
     );
   }

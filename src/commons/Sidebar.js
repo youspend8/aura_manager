@@ -3,16 +3,20 @@ import { Link } from 'react-router-dom';
 
 export default class Sidebar extends Component {
   state = {
-    
+    toggler: true,
+    sidebar: {
+      width: '240px',
+      height: '100vh'
+    }
   }
-  
+
   render() {
     // console.log(window.innerWidth);
     return (
-      <nav class="mb-1 navbar navbar-expand-lg navbar-light bg-white flex-column position-fixed" style={{width: '240px', height: '100vh'}}>
+      <nav class="mb-1 navbar navbar-expand-lg navbar-light bg-white flex-column position-fixed" style={this.state.sidebar}>
         
         {/* 로고 */}
-        <div class="navbar-brand w-100 mx-0 my-4 d-md-flex d-none justify-content-center">
+        <div class="navbar-brand w-100 mx-0 my-4 d-flex justify-content-center">
           <Link to="/">
             <img src="/img/brand_logo.png"></img>
           </Link>

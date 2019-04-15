@@ -8259,6 +8259,11 @@ react-chartjs-2@^2.7.6:
     lodash "^4.17.4"
     prop-types "^15.5.8"
 
+react-confirm-alert@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-confirm-alert/-/react-confirm-alert-2.4.1.tgz#cc0837edd80271ea1c5e93840537399e99b07ff3"
+  integrity sha512-Sc2N1paCTCS5HWEAhik2IQa9/vwSQLAoCT5uccjPH/VyTaBAkRPZPx9sUqFTy3q5VnnGwCPsoz7fnw54x79d/w==
+
 react-dev-utils@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-8.0.0.tgz#7c5b227a45a32ea8ff7fbc318f336cf9e2c6e34c"
@@ -8358,7 +8363,7 @@ react-router@5.0.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-scripts@2.1.8:
+react-scripts@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-2.1.8.tgz#21195bb928b2c0462aa98b2d32edf7d034cff2a9"
   integrity sha512-mDC8fYWCyuB9VROti8OCPdHE79UEchVVZmuS/yaIs47VkvZpgZqUvzghYBswZRchqnW0aARNY8xXrzoFRhhK7A==

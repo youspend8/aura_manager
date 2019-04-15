@@ -11,31 +11,20 @@ import PopReview from 'components/dashboard/PopReview';
 import AdminUpdate from 'components/dashboard/AdminUpdate';
 
 export default class Main extends Component {
-  state = {
-    toggler: false,
-  }
 
   render() {
     return (
-      // <div class="card col-10">
-      <div class="card content-area">
-        <div class="card-header d-flex dashboard align-items-center">
-          <h5 class="card-title m-0">
-            Dashboard
-          </h5>
-        </div>
-        <div class="card-body d-flex flex-wrap dashboard px-2">
-          <Visitor />
-          <Repost />
-          <ReviewCount />
-          <UserStats />
-          <ServiceStats />
-          <GenderStats />
-          <YearUserStats />
-          <PopUserRanking />
-          <PopReview />
-          <AdminUpdate />
-        </div>
+      <div class="card-body d-flex flex-wrap dashboard px-2">
+        <Visitor />
+        <Repost />
+        <ReviewCount />
+        <UserStats />
+        <ServiceStats />
+        <GenderStats />
+        <YearUserStats />
+        <PopUserRanking />
+        <PopReview />
+        <AdminUpdate />
       </div>
     );
   }
