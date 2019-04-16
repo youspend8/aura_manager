@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import NoticePostForm from 'components/notice/NoticePostForm';
+import ReviewPostForm from 'components/review/ReviewPostForm';
 import axios from 'axios';
 
-export default class NoticePost extends Component {
+export default class ReviewPost extends Component {
   state = {
     num: '',
-    title: '',
+    name: '',
     content: '',
-    writeDate: '',
-    writer: '',
-    category: ''
+    category: '',
+    addDate: '',
+    bookmark: '',
+    commentCount: '',
+    goodCount: '',
+    readCount: ''
   }
-  
+
   componentDidMount() {
     this.callApi();
   }
@@ -19,23 +22,25 @@ export default class NoticePost extends Component {
   callApi = () => {
     const url = '/notice/' + this.props.match.params.num;
     return axios.get(url)
-      .then(res => console.log(this.setState(res.data)))
+      .then(res => this.setState(res.data))
       .catch(err => console.log(err));
   }
 
   render() {
-    console.log('render')
     return (
       <div className="card-body page-body px-5" style={{backgroundColor: 'RGB(48,61,71)'}}>
         {
           this.state.title ? 
-          <NoticePostForm
+          <ReviewPostForm
             num={this.state.num} 
-            title={this.state.title}
+            name={this.state.name}
             content={this.state.content}
-            writeDate={this.state.writeDate} 
-            writer={this.state.writer}
+            addDate={this.state.addDate} 
             category={this.state.category}
+            bookmark={this.state.bookmark}
+            commentCount={this.state.commentCount}
+            goodCount={this.state.goodCount}
+            readCount={this.state.readCount}
           /> : ''
         }
       </div>

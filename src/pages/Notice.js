@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import NoticeTable from 'components/notice/NoticeTable';
 import NoticeSearchForm from 'components/notice/NoticeSearchForm';
 import Pagination from 'commons/Pagination';
-import axios from 'axios';
-import PageHeader from 'commons/PageHeader';
 
 export default class Notice extends Component {
   render() {
