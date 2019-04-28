@@ -13,6 +13,8 @@ import Withdraw from 'pages/Withdraw';
 import Manager from 'pages/Manager';
 import Visitors from 'pages/Visitors';
 import PageHeader from 'commons/PageHeader';
+import Review from 'pages/Review';
+import ReviewPost from 'pages/ReviewPost';
 
 class App extends Component {
   state = {
@@ -22,7 +24,8 @@ class App extends Component {
     },
     content: {
       width: 'calc(100% - 240px)'
-    }
+    },
+    page: 'Dashboard'
   }
 
   handleSidebar = () => {
@@ -45,6 +48,10 @@ class App extends Component {
     })
   }
 
+  handleChangePage = (page) => {
+    this.setState({page: page})
+  }
+
   render() {
     return (
       <div class="d-flex flex-wrap" style={{height: "100vh"}}>
@@ -52,7 +59,7 @@ class App extends Component {
           <Sidebar />
         </div>
         <div class="card content-area" style={this.state.content}>
-          <PageHeader page={'Dashboard'} handleSidebar={this.handleSidebar} handleContent={this.handleContent} />
+          <PageHeader page={'탈퇴회원목록'} handleSidebar={this.handleSidebar} handleContent={this.handleContent} />
           
           <Route exact path="/" component={() => <Main />}  />
           <Route path="/withdraw" component={() => <Withdraw page={'탈퇴회원목록'} />} />
@@ -61,6 +68,10 @@ class App extends Component {
           <Switch>
             <Route path="/notice/write" component={NoticeWrite} />
             <Route path="/notice/:num" component={() => <NoticePost page={'게시글 내용'} />} />
+            <Route path="/review" component={Review} />
+          </Switch>
+          <Switch>
+            <Route path="/notice/:num" component={NoticePost} /> 
             <Route path="/notice" component={() => <Notice page={'공지사항/이벤트 게시글 관리'} />} />
           </Switch>
           <Switch>

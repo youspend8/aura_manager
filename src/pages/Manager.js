@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import NoticeTable from 'components/manager/ManagerTable';
 import Pagination from 'commons/Pagination';
-import PageHeader from 'commons/PageHeader';
 
 export default class Manager extends Component {
   render() {
