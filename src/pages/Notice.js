@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import NoticeTable from 'components/notice/NoticeTable';
 import NoticeSearchForm from 'components/notice/NoticeSearchForm';
 import Pagination from 'commons/Pagination';
-import axios from 'axios';
-import PageHeader from 'commons/PageHeader';
+import { Link } from 'react-router-dom';
 
 export default class Notice extends Component {
   render() {
@@ -12,6 +11,11 @@ export default class Notice extends Component {
         <NoticeSearchForm />
         <NoticeTable />
         <Pagination />
+        <div class="text-center">
+          <Link to='/notice/write'>
+            <button type="button" class="btn indigo text-white">글쓰기</button>
+          </Link>
+        </div>
       </div>
     );
   }
