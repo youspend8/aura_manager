@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReviewTableBody from 'components/review/ReviewTableBody';
 import Checkbox from '@material-ui/core/Checkbox';
 import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default class ReviewTable extends Component {
   state = {
@@ -62,7 +63,12 @@ export default class ReviewTable extends Component {
                   readCount={item.readCount}
                 />
               )
-            }) : ''
+            }) : 
+            <tr>
+              <td colSpan="9" align="center">
+                <CircularProgress disableShrink color="secondary" />
+              </td>
+            </tr>
           }
         </tbody>
       </table>
