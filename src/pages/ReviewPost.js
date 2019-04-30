@@ -20,7 +20,7 @@ export default class ReviewPost extends Component {
   }
 
   callApi = () => {
-    const url = '/notice/' + this.props.match.params.num;
+    const url = '/review/' + this.props.match.params.num;
     return axios.get(url)
       .then(res => this.setState(res.data))
       .catch(err => console.log(err));

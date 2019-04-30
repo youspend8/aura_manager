@@ -9,7 +9,6 @@ export default class Review extends Component {
     type: 0,
     keyword: '',
     currentPage: '',
-    data: {},
     labelWidth: 0
   };
 
@@ -24,14 +23,6 @@ export default class Review extends Component {
   }
 
   handlePageChange = e => {
-
-  }
-  
-  componentDidMount() {
-    
-  }
-
-  callApi = () => {
 
   }
 

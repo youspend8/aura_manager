@@ -1,14 +1,27 @@
 import React, { Component } from 'react';
 import ReviewTableBody from 'components/review/ReviewTableBody';
 import Checkbox from '@material-ui/core/Checkbox';
+import axios from 'axios';
 
 export default class ReviewTable extends Component {
   state = {
-    checkedB: false
+    checked: false,
+    data: ''
   }
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+  handleChange = () => {
+    this.setState({checked : !this.state.checked});
+  }
+
+  componentDidMount() {
+    const url = '/api/review/list';
+    axios.get(url)
+      .then(res => this.setState(res))
+      .catch(err => console.log(err));
+    console.log(this.state.data ? true : false)
+    setTimeout(() => {
+      console.log(this.state.data)
+    }, 3000);
   }
 
   render() {
@@ -18,9 +31,8 @@ export default class ReviewTable extends Component {
           <tr>
             <th class="align-middle" style={{fontWeight: '800', fontSize: '18px'}}>
               <Checkbox
-                checked={this.state.checkedB}
-                onChange={this.handleChange('checkedB')}
-                value="checkedB"
+                checked={this.state.checked}
+                onChange={this.handleChange}
                 color="primary"
                 style={{color: 'white'}}
               />
@@ -36,7 +48,22 @@ export default class ReviewTable extends Component {
           </tr>
         </thead>
         <tbody>
-          <ReviewTableBody />
+          {
+            this.state.data ? this.state.data.map((item, i) => {
+              return (
+                <ReviewTableBody 
+                  num={item.num}
+                  category={item.category}
+                  title={item.title}
+                  addDate={item.addDate}
+                  goods={item.goods}
+                  bookmark={item.bookmark}
+                  comments={item.comments}
+                  readCount={item.readCount}
+                />
+              )
+            }) : ''
+          }
         </tbody>
       </table>
     );

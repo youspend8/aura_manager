@@ -4,11 +4,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 export default class ReviewTableBody extends Component {
   state = {
-    checkedB: false,
+    checked: false,
   };
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+  handleChange = () => {
+    this.setState({checked : !this.state.checked});
   };
 
   render() {
@@ -16,36 +16,37 @@ export default class ReviewTableBody extends Component {
       <tr>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
           <Checkbox
-            checked={this.state.checkedB}
-            onChange={this.handleChange('checkedB')}
-            value="checkedB"
+            checked={this.state.checked}
+            onChange={this.handleChange}
             color="primary"
             style={{color: 'white'}}
           />
         </td>
-        <td class="align-middle p-1" style={{fontWeight: '800'}}>1</td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          맛집
+          {this.props.num}
+        </td>
+        <td class="align-middle p-1" style={{fontWeight: '800'}}>
+          {this.props.category == 1 ? '음식점' : this.props.category == 2 ? '병원' : '전자제품'}
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
           <Link to="/review/1" class="text-light">
-            비트캠프 서초본점
+            {this.props.title}
           </Link>
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          2019-04-05
+          {this.props.addDate}
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          6,451
+          {this.props.goods}
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          900,541
+          {this.props.bookmark}
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          4,422
+          {this.props.comments}
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          84,522
+          {this.props.readCount}
         </td>
       </tr>
     );

@@ -15,6 +15,7 @@ import Visitors from 'pages/Visitors';
 import PageHeader from 'commons/PageHeader';
 import Review from 'pages/Review';
 import ReviewPost from 'pages/ReviewPost';
+import ReviewWrite from 'pages/ReviewWrite';
 
 class App extends Component {
   state = {
@@ -66,11 +67,12 @@ class App extends Component {
           <Route path="/manager" component={() => <Manager page={'관리자 처리 내역'} />} />
           <Route path="/visitors" component={() => <Visitors page={'방문자 통계'} />} />
           <Switch>
-            <Route path="/notice/write" component={NoticeWrite} />
-            <Route path="/notice/:num" component={() => <NoticePost page={'게시글 내용'} />} />
+            <Route path="/review/write" component={ReviewWrite} />
+            <Route path="/review/:num" component={() => <ReviewPost page={'게시글 내용'} />} />
             <Route path="/review" component={Review} />
           </Switch>
           <Switch>
+            <Route path="/notice/write" component={NoticeWrite} />
             <Route path="/notice/:num" component={NoticePost} /> 
             <Route path="/notice" component={() => <Notice page={'공지사항/이벤트 게시글 관리'} />} />
           </Switch>
