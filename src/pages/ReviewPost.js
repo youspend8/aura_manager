@@ -23,16 +23,17 @@ export default class ReviewPost extends Component {
         {
           data ? 
           <ReviewPostForm
-            num={data.num} 
+            num={data.NUM} 
             title={data.TITLE}
             contents={data.CONTENTS}
-            addDate={data.addDate}
-            type={data.type}
-            category={data.category}
-            bookmark={data.bookmark}
-            comments={data.comments}
-            goodCount={data.goods}
-            readCount={data.readCount}
+            type={data.TYPE}
+            category={data.CATEGORY}
+            bookmark={data.BOOKMARK}
+            comments={data.COMMENTS}
+            goodCount={data.GOODS}
+            readCount={data.READCOUNT}
+            menu={data.MENU}
+            files={data.FILES}
           /> : 
           <div class="my-5 text-center">
             <Circular color='secondary' />

@@ -10,6 +10,9 @@ const style = {
 }
 
 export default class ReviewPostForm extends Component {
+  state = {
+    menu : ''
+  }
   submit = e => {
     e.preventDefault();
     confirmAlert({
@@ -47,9 +50,23 @@ export default class ReviewPostForm extends Component {
           {this.props.bookmark}
           {this.props.comments}
           {this.props.goods}
-
-          <div className="my-3">
-            <img src="https://loremflickr.com/320/240" className="w-50" />
+          {
+            JSON.parse(this.props.menu).menu.map((item, index) => {
+              return (
+                <div class="text-center">
+                  {item.name} {item.price}
+                </div>
+              );
+            })
+          }
+          <div class="d-flex flex-wrap">
+            {
+              this.props.files.map((item, index) => {
+                return (
+                  <img src={item} className="col-4 h-100" />
+                );
+              })
+            }
           </div>
         </section>
         <button type="button" className="btn btn-danger">목록</button>
