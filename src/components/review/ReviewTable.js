@@ -66,7 +66,7 @@ export default class ReviewTable extends Component {
             }) : 
             <tr>
               <td colSpan="9" align="center">
-                <CircularProgress disableShrink color="secondary" />
+                <CircularProgress color="secondary" />
               </td>
             </tr>
           }

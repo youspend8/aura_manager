@@ -6,7 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 export default class ReviewWriteForm extends Component {
   state = {
-    type: 3,
+    type: 1,
     title : '',
     address1 : '',
     address2 : '',
@@ -253,7 +253,7 @@ class RestaurantReviewForm extends Component {
             테이크아웃
             <Checkbox
               checked={this.props.takeOut}
-              onChange={this.handleCheckChange}
+              onChange={this.props.handleCheckChange}
               color="primary"
               style={{color: 'white'}}
               name="takeOut"

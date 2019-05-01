@@ -1,47 +1,42 @@
 import React, { Component } from 'react';
 import ReviewPostForm from 'components/review/ReviewPostForm';
 import axios from 'axios';
+import Circular from '@material-ui/core/CircularProgress';
 
 export default class ReviewPost extends Component {
   state = {
-    num: '',
-    name: '',
-    content: '',
-    category: '',
-    addDate: '',
-    bookmark: '',
-    commentCount: '',
-    goodCount: '',
-    readCount: ''
+    data : ''
   }
 
   componentDidMount() {
-    this.callApi();
-  }
-
-  callApi = () => {
-    const url = '/review/' + this.props.match.params.num;
-    return axios.get(url)
-      .then(res => this.setState(res.data))
-      .catch(err => console.log(err));
+    const { num, type } = this.props.match.params;
+    const url = `/api/review/${num}/${type}`;
+    axios.get(url)
+      .then(res => this.setState(res))
+      .catch(err => console.log(err))
   }
 
   render() {
+    const { data } = this.state
     return (
       <div className="card-body page-body px-5" style={{backgroundColor: 'RGB(48,61,71)'}}>
         {
-          this.state.title ? 
+          data ? 
           <ReviewPostForm
-            num={this.state.num} 
-            name={this.state.name}
-            content={this.state.content}
-            addDate={this.state.addDate} 
-            category={this.state.category}
-            bookmark={this.state.bookmark}
-            commentCount={this.state.commentCount}
-            goodCount={this.state.goodCount}
-            readCount={this.state.readCount}
-          /> : ''
+            num={data.num} 
+            title={data.TITLE}
+            contents={data.CONTENTS}
+            addDate={data.addDate}
+            type={data.type}
+            category={data.category}
+            bookmark={data.bookmark}
+            comments={data.comments}
+            goodCount={data.goods}
+            readCount={data.readCount}
+          /> : 
+          <div class="my-5 text-center">
+            <Circular color='secondary' />
+          </div>
         }
       </div>
     );

@@ -33,8 +33,9 @@ export default class NoticeTableBody extends Component {
           </Link>
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          <Link to="/user/지성쿤" class="text-light" style={{textDecoration: 'underline'}}>
-            지성쿤
+          {/* ${this.props.match.params.nickname} */}
+          <Link to={`/user/채훈22`} class="text-light" style={{textDecoration: 'underline'}}>
+            채훈22
           </Link>
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>

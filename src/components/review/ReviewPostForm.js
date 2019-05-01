@@ -34,7 +34,7 @@ export default class ReviewPostForm extends Component {
       <div className="text-center">
         <header className="text-center py-4 m-0" style={style.header}>
           <h3 className="d-flex align-items-center justify-content-center m-0">
-            {this.props.name}
+            {this.props.title}
             <span className="badge badge-pill badge-danger ml-2">{this.props.category}</span>
           </h3>
           {this.props.addDate}
@@ -43,10 +43,10 @@ export default class ReviewPostForm extends Component {
           조회수 : {this.props.readCount}회
         </div>
         <section class="container text-center">
-          {this.props.content}
+          {this.props.contents}
           {this.props.bookmark}
-          {this.props.commentCount}
-          {this.props.goodCount}
+          {this.props.comments}
+          {this.props.goods}
 
           <div className="my-3">
             <img src="https://loremflickr.com/320/240" className="w-50" />

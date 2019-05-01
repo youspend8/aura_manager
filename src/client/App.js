@@ -68,7 +68,7 @@ class App extends Component {
           <Route path="/visitors" component={() => <Visitors page={'방문자 통계'} />} />
           <Switch>
             <Route path="/review/write" component={ReviewWrite} />
-            <Route path="/review/:num" component={() => <ReviewPost page={'게시글 내용'} />} />
+            <Route path="/review/:num/:type" component={ReviewPost} />
             <Route path="/review" component={Review} />
           </Switch>
           <Switch>
@@ -77,8 +77,8 @@ class App extends Component {
             <Route path="/notice" component={() => <Notice page={'공지사항/이벤트 게시글 관리'} />} />
           </Switch>
           <Switch>
-            <Route path="/user/:nickname" component={() => <UserInfo page={'유저정보'} />} />
-            <Route path="/user" component={() => <User page={'회원목록'} />} />
+            <Route path="/user/:nickname" component={UserInfo} />
+            <Route path="/user" component={User} />
           </Switch>
         </div>
       </div>
