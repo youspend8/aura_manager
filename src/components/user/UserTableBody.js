@@ -31,7 +31,7 @@ export default class UserTableBody extends Component {
           {this.props.gender ? '남' : '여'}
         </td>
         <td class="align-middle" style={{fontWeight: '800'}}>
-          {this.props.age_Range == 0 ? '' : this.props.age_Range}
+          {this.props.age_Range == 0 ? '' : this.props.age_Range}대
         </td>
         <td class="align-middle" style={{fontWeight: '800'}}>
           {reg_Location[this.props.reg_Location - 1]}
@@ -40,7 +40,7 @@ export default class UserTableBody extends Component {
           {author_Type[this.props.author_Type]}
         </td>
         <td class="align-middle" style={{fontWeight: '800'}}>
-          {this.props.del_Date ? '탈퇴' : '일반'}
+          {this.props.del_Date ? this.props.del_Date : '일반'}
         </td>
       </tr>
     );

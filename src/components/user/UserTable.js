@@ -16,6 +16,7 @@ export default class UserTable extends Component {
   }
   
   render() {
+    const { data } = this.state;
     return (
       <table class="table text-center w-100" style={{backgroundColor: 'RGB(48,61,71)', color: 'white'}}>
         <thead>
@@ -31,7 +32,7 @@ export default class UserTable extends Component {
         </thead>
         <tbody>
           {
-            this.state.data ? this.state.data.map((item, index) => {
+            data ? data.map((item, index) => {
               return (
                 <UserTableBody 
                   key={index}
@@ -44,7 +45,7 @@ export default class UserTable extends Component {
                   del_Date={item.delDate}
                 />
               );
-            }) : 
+            }) :
             <tr>
               <td colSpan="9" align="center">
                 <CircularProgress color="secondary" />

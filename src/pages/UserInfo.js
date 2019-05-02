@@ -35,20 +35,20 @@ export default class UserInfo extends Component {
   handleWithdraw = e => {
     e.preventDefault();
     confirmAlert({
-      title: '회원탈퇴',
-      message: `${this.state.data.nickname} 님을 탈퇴시키겠습니까?`,
+      title: '임시회원탈퇴',
+      message: `${this.state.data.nickname} 님을 임시로 탈퇴시키겠습니까?`,
       closeOnClickOutside: false,
       buttons: [
         {
           label: '삭제',
           onClick: () => {
-            const url = '/api/user/' + this.state.data.nickname;
-            axios.delete(url)
+            const url = '/api/user/withdraw';
+            axios.post(url, {nickname : this.state.data.nickname})
               .then(res => {
                 if (res.data === true) {
                   confirmAlert({
                     title: '완료',
-                    message: `${this.state.data.nickname} 님의 탈퇴를 성공적으로 처리했습니다.`,
+                    message: `${this.state.data.nickname} 님의 임시탈퇴를 성공적으로 처리했습니다.`,
                     closeOnClickOutside: false,
                     buttons: [
                       {
@@ -61,7 +61,7 @@ export default class UserInfo extends Component {
                 } else {
                   confirmAlert({
                     title: '실패',
-                    message: `${this.state.data.nickname} 님의 탈퇴시키는데 실패했습니다.`,
+                    message: `${this.state.data.nickname} 님의 임시탈퇴시키는데 실패했습니다.`,
                     closeOnClickOutside: false,
                     buttons: [
                       {
@@ -123,7 +123,7 @@ export default class UserInfo extends Component {
           </form>
 
           <div class="mt-5">
-            <a href="#" class="text-danger" onClick={this.handleWithdraw}>회원탈퇴</a>
+            <a href="#" class="text-danger" onClick={this.handleWithdraw}>임시회원탈퇴</a>
           </div>
 
         </div>
