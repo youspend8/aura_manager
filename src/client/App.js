@@ -54,18 +54,19 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.location)
     return (
       <div class="d-flex flex-wrap" style={{height: "100vh"}}>
         <div class="p-0 d-md-flex" id="sidebar" style={this.state.sidebar}>
           <Sidebar />
         </div>
         <div class="card content-area" style={this.state.content}>
-          <PageHeader page={'탈퇴회원목록'} handleSidebar={this.handleSidebar} handleContent={this.handleContent} />
+          <PageHeader handleSidebar={this.handleSidebar} handleContent={this.handleContent} />
           
-          <Route exact path="/" component={() => <Main />}  />
-          <Route path="/withdraw" component={() => <Withdraw page={'탈퇴회원목록'} />} />
-          <Route path="/manager" component={() => <Manager page={'관리자 처리 내역'} />} />
-          <Route path="/visitors" component={() => <Visitors page={'방문자 통계'} />} />
+          <Route exact path="/" component={Main} />
+          <Route path="/withdraw" component={Withdraw} />
+          <Route path="/manager" component={Manager} />
+          <Route path="/visitors" component={Visitors} />
           <Switch>
             <Route path="/review/write" component={ReviewWrite} />
             <Route path="/review/:num/:type" component={ReviewPost} />
@@ -74,7 +75,7 @@ class App extends Component {
           <Switch>
             <Route path="/notice/write" component={NoticeWrite} />
             <Route path="/notice/:num" component={NoticePost} /> 
-            <Route path="/notice" component={() => <Notice page={'공지사항/이벤트 게시글 관리'} />} />
+            <Route path="/notice" component={Notice} />
           </Switch>
           <Switch>
             <Route path="/user/:nickname" component={UserInfo} />

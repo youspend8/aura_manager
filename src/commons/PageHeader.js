@@ -14,7 +14,7 @@ export default class PageHeader extends Component {
 					<button class="navbar-toggler mr-2" type="button" onClick={this.handleSideEvent}>
 						<i class="fas fa-bars text-white align-middle"></i>
 					</button>
-					{window.location.pathname}
+					{this.props.location}
 				</h5>
 			</div>
 		);

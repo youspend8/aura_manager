@@ -3,25 +3,28 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Checkbox from '@material-ui/core/Checkbox';
+import axios from 'axios';
 
 export default class ReviewWriteForm extends Component {
   state = {
     type: 1,
     title : '',
-    address1 : '',
+    address1 : '서울',
     address2 : '',
     address3 : '',
     detaile_Addr : '',
     tel1 : '',
     tel2 : '',
     tel3 : '',
-    waitingTime : '',
+    waitingTime : '5분',
+    serviceTime : '',
     delivery : false,
     takeOut : false,
-    hospital_Category : '',
-    medical_Category : '',
+    restaurant_category : 0,
+    hospital_Category : 0,
+    medical_Category : 0,
     sub_Medical_Category : [
-      '123'
+      0
     ],
     menu : [
       {
@@ -38,10 +41,58 @@ export default class ReviewWriteForm extends Component {
 
   handleFormSubmit = (e) => {
     e.preventDefault();
+    const url = '/api/review/';
+
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data; '
+      }
+    }
+
+    const formData = new FormData();
+    formData.append('type', this.state.type);
+    formData.append('title', this.state.title);
+    formData.append('contents', this.state.contents);
+    formData.append('address1', this.state.address1);
+    formData.append('address2', this.state.address2);
+    formData.append('address3', this.state.address3);
+    formData.append('tel', this.state.tel1 + '-' + this.state.tel2 + '-' + this.state.tel3);
+    formData.append('detaileAddr', this.state.detaile_Addr);
+    formData.append('waitingTime', this.state.waitingTime);
+    formData.append('serviceTime', this.state.serviceTime);
+    formData.append('restaurantCategory', this.state.restaurant_category);
+    formData.append('delivery', this.state.delivery ? 1 : 0);
+    formData.append('takeOut', this.state.takeOut ? 1 : 0);
+    formData.append('hospitalCategory', this.state.hospital_Category);
+    formData.append('medicalCategory', this.state.medical_Category);
+
+    let subMedicalCategory = '';
+    this.state.sub_Medical_Category.map((item, i) => {
+      subMedicalCategory += item;
+      subMedicalCategory += (i == this.state.sub_Medical_Category.length - 1) ? '' : ',';
+    });
+    formData.append('subMedicalCategory', "{\"subCategory\": [" + subMedicalCategory + "]}");
+
+    let menu = '';
+    this.state.menu.map((item, i) => {
+      menu += "{\"name\": \"" + item.name + "\",\"price\": \"" + item.price + "\"}";
+      menu += (i == this.state.menu.length - 1) ? '' : ',';
+    });
+    formData.append('menu', "{\"menu\" :[" + menu + "]}");
+    
+    this.state.fileList.forEach((file, index) => {
+      formData.append('file', file);
+    })
+
+    console.log(menu);
+    axios.post(url, formData, config)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   }
 
   handleFormChange = (e) => {
     this.setState({[e.target.name] : e.target.value});
+    console.log(this.state)
   }
 
   handleTypeChange = (e, type) => {
@@ -79,7 +130,7 @@ export default class ReviewWriteForm extends Component {
 
   handleMedicalCategoryAdd = () => {
     this.setState({
-      sub_Medical_Category : this.state.sub_Medical_Category.concat('')
+      sub_Medical_Category : this.state.sub_Medical_Category.concat(0)
     });
   }
 
@@ -95,7 +146,7 @@ export default class ReviewWriteForm extends Component {
     const temp = [];
     const files = e.target.files;
     for (const file of files) {
-      temp.push(file.name);
+      temp.push(file);
     }
     this.setState({
       fileList : temp
@@ -192,17 +243,17 @@ class PlaceReviewForm extends Component {
             <input type="text" class="form-control" name="address3" onChange={this.props.handleFormChange} placeholder="동/읍/리"></input>
           </td>
           <td style={{width: '20%'}}>
-            <input type="text" class="form-control" name="detail_Addr" onChange={this.props.handleFormChange} placeholder="상세주소"></input>
+            <input type="text" class="form-control" name="detaile_Addr" onChange={this.props.handleFormChange} placeholder="상세주소"></input>
           </td>
         </tr>
         <tr>
           <td>연락처</td>
           <td colSpan="2">
-            <input type="text" class="form-control d-inline-block col-3" name="tel1"></input>
+            <input type="text" class="form-control d-inline-block col-3" name="tel1" onChange={this.props.handleFormChange}></input>
             <span>&nbsp;-&nbsp;</span>
-            <input type="text" class="form-control d-inline-block col-3" name="tel2"></input>
+            <input type="text" class="form-control d-inline-block col-3" name="tel2" onChange={this.props.handleFormChange}></input>
             <span>&nbsp;-&nbsp;</span>
-            <input type="text" class="form-control d-inline-block col-3" name="tel3"></input>
+            <input type="text" class="form-control d-inline-block col-3" name="tel3" onChange={this.props.handleFormChange}></input>
           </td>
           <td>웨이팅시간</td>
           <td>
@@ -236,8 +287,8 @@ class RestaurantReviewForm extends Component {
         <tr>
           <td>카테고리</td>
           <td>
-            <select class="form-control" name="category" onChange={this.props.handleFormChange}>
-              <option>한식</option>
+            <select class="form-control" name="restaurant_category" onChange={this.props.handleFormChange}>
+              <option value={0}>한식</option>
             </select>
           </td>
           <td class="align-middle py-0" colSpan="3">
@@ -293,14 +344,31 @@ class HospitalReviewForm extends Component {
           <td>병원분류</td>
           <td>
             <select class="form-control" name="hospital_Category" onChange={this.props.handleFormChange}>
-              <option value="종합병원">종합병원</option>
+              <option value={0}>종합병원</option>
             </select>
           </td>
           <td>주요진료과목</td>
           <td>
             <select class="form-control" name="medical_Category" onChange={this.props.handleFormChange}>
-              <option value="외과">외과</option>
-              <option value="내과">내과</option>
+              <option value={0}>정형외과</option>
+              <option value={1}>피부과</option>
+              <option value={2}>외과</option>
+              <option value={3}>내과</option>
+              <option value={4}>소아청소년과</option>
+              <option value={5}>이비인후과</option>
+              <option value={6}>신경외과</option>
+              <option value={7}>비뇨기과</option>
+              <option value={8}>재활의학과</option>
+              <option value={9}>신경과</option>
+              <option value={10}>결핵과</option>
+              <option value={11}>치과</option>
+              <option value={12}>성형외과</option>
+              <option value={13}>산부인과</option>
+              <option value={14}>마취통증의학과</option>
+              <option value={15}>안과</option>
+              <option value={16}>한의원</option>
+              <option value={17}>흉부외과</option>
+              <option value={18}>영상의학과</option>
             </select>
           </td>
         </tr>
@@ -311,8 +379,25 @@ class HospitalReviewForm extends Component {
               this.props.sub_Medical_Category.map((item, index) => {
                 return (
                   <select class="form-control mb-2" name="sub_Medical_Category" onChange={this.props.handleMedicalCategoryChange(index)}>
-                    <option value="외과">외과</option>
-                    <option value="내과">내과</option>
+                    <option value={0}>정형외과</option>
+                    <option value={1}>피부과</option>
+                    <option value={2}>외과</option>
+                    <option value={3}>내과</option>
+                    <option value={4}>소아청소년과</option>
+                    <option value={5}>이비인후과</option>
+                    <option value={6}>신경외과</option>
+                    <option value={7}>비뇨기과</option>
+                    <option value={8}>재활의학과</option>
+                    <option value={9}>신경과</option>
+                    <option value={10}>결핵과</option>
+                    <option value={11}>치과</option>
+                    <option value={12}>성형외과</option>
+                    <option value={13}>산부인과</option>
+                    <option value={14}>마취통증의학과</option>
+                    <option value={15}>안과</option>
+                    <option value={16}>한의원</option>
+                    <option value={17}>흉부외과</option>
+                    <option value={18}>영상의학과</option>
                   </select>
                 );
               })

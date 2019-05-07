@@ -50,15 +50,27 @@ export default class ReviewPostForm extends Component {
           {this.props.bookmark}
           {this.props.comments}
           {this.props.goods}
+          {this.props.hospitalCategory}
+          {this.props.medicalCategory}
           {
+            this.props.type == 1 ?
             JSON.parse(this.props.menu).menu.map((item, index) => {
               return (
                 <div class="text-center">
                   {item.name} {item.price}
                 </div>
               );
-            })
+            }) : 
+            this.props.type == 2 ?
+            JSON.parse(this.props.subCategory).subCategory.map((item, index) => {
+              return (
+                <div class="text-center">
+                  {item}
+                </div>
+              );
+            }) : ''
           }
+          {console.log(this.props)}
           <div class="d-flex flex-wrap">
             {
               this.props.files.map((item, index) => {

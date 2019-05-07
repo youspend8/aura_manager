@@ -12,7 +12,10 @@ export default class ReviewPost extends Component {
     const { num, type } = this.props.match.params;
     const url = `/api/review/${num}/${type}`;
     axios.get(url)
-      .then(res => this.setState(res))
+      .then(res => {
+        console.log(res);
+        this.setState(res);
+      })
       .catch(err => console.log(err))
   }
 
@@ -34,6 +37,9 @@ export default class ReviewPost extends Component {
             readCount={data.READCOUNT}
             menu={data.MENU}
             files={data.FILES}
+            hospitalCategory={data.HOSPITALCATEGORY}
+            medicalCategory={data.MEDICALCATEGORY}
+            subCategory={data.SUBCATEGORY}
           /> : 
           <div class="my-5 text-center">
             <Circular color='secondary' />
