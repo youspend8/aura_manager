@@ -39,6 +39,7 @@ export default class ReviewWriteForm extends Component {
     fileList : []
   }
 
+  //  등록하기 눌렀을 때 
   handleFormSubmit = (e) => {
     e.preventDefault();
     const url = '/api/review/';
@@ -84,21 +85,25 @@ export default class ReviewWriteForm extends Component {
       formData.append('file', file);
     })
 
+    //  컨트롤러에게 데이터 전송
     console.log(menu);
     axios.post(url, formData, config)
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }
 
+  //  폼 안의 내용이 변경될때마다
   handleFormChange = (e) => {
     this.setState({[e.target.name] : e.target.value});
     console.log(this.state)
   }
 
+  //  Type이 변경될때마다
   handleTypeChange = (e, type) => {
     this.setState({type : type + 1});
   }
 
+  //  체크박스 누를때마다
   handleCheckChange = (e) => {
     if (e.target.name == 'delivery') {
       this.setState({delivery : !this.state.delivery});
@@ -107,6 +112,7 @@ export default class ReviewWriteForm extends Component {
     }
   }
 
+  //  메뉴 추가하기 버튼 클릭시
   handleMenuAdd = () => {
     this.setState({
       menu : this.state.menu.concat({
@@ -116,6 +122,7 @@ export default class ReviewWriteForm extends Component {
     });
   }
   
+  //  메뉴 내용을 변경할 때
   handleMenuChange = (index) => (e) => {
     const temp = [...this.state.menu];
     temp.map((item, i) => {
@@ -128,12 +135,14 @@ export default class ReviewWriteForm extends Component {
     });
   }
 
+  //  진료과목 추가할때마다
   handleMedicalCategoryAdd = () => {
     this.setState({
       sub_Medical_Category : this.state.sub_Medical_Category.concat(0)
     });
   }
 
+  //  진료과목 내용을 변경할 때
   handleMedicalCategoryChange = (index) => (e) => {
     const temp = [...this.state.sub_Medical_Category];
     temp[index] = e.target.value;
@@ -142,6 +151,7 @@ export default class ReviewWriteForm extends Component {
     });
   }
 
+  //  파일 내용 변경시
   handleFileChange = (e) => {
     const temp = [];
     const files = e.target.files;
