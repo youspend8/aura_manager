@@ -16,33 +16,26 @@ export default class NoticeTableBody extends Component {
       <tr>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
           <Checkbox
-            checked={this.state.checkedB}
-            onChange={this.handleChange('checkedB')}
-            value="checkedB"
+            checked={this.state.checked}
+            onChange={this.handleChange('checked')}
+            value="checked"
             color="primary"
             style={{color: 'white'}}
           />
         </td>
-        <td class="align-middle p-1" style={{fontWeight: '800'}}>1</td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          이벤트
+          {this.props.num}
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          <Link to="/notice/1" class="text-light">
-            2019년 4월 1주차 업데이트 사항 안내
+          {this.props.isNotice}
+        </td>
+        <td class="align-middle p-1" style={{fontWeight: '800'}}>
+          <Link to={`/notice/${this.props.num}/`} class="text-light">
+            {this.props.title}
           </Link>
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          {/* ${this.props.match.params.nickname} */}
-          <Link to={`/user/채훈22`} class="text-light" style={{textDecoration: 'underline'}}>
-            채훈22
-          </Link>
-        </td>
-        <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          2019-04-05
-        </td>
-        <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          84522
+          {this.props.addDate}
         </td>
       </tr>
     );

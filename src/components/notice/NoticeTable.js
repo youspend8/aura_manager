@@ -1,14 +1,28 @@
 import React, { Component } from 'react';
 import NoticeTableBody from './NoticeTableBody';
 import Checkbox from '@material-ui/core/Checkbox';
+import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default class NoticeTable extends Component {
   state = {
-    checkedB: false
+    checkedB: false,
+    data : ''
   }
 
   handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+    this.setState({ [name]: !event.target.checkedB });
+  }
+
+  componentDidMount() {
+    const url = '/api/notice/list';
+    axios.get(url)
+      .then(res => this.setState(res))
+      .catch(err => console.log(err));
+    console.log(this.state.data ? true : false)
+    setTimeout(() => {
+      console.log(this.state.data)
+    }, 3000);
   }
 
   render() {
@@ -28,13 +42,27 @@ export default class NoticeTable extends Component {
             <th class="align-middle"  style={{fontWeight: '800', fontSize: '18px'}}>번호</th>
             <th class="align-middle"  style={{fontWeight: '800', fontSize: '18px'}}>구분</th>
             <th class="align-middle"  style={{fontWeight: '800', fontSize: '18px'}}>제목</th>
-            <th class="align-middle"  style={{fontWeight: '800', fontSize: '18px'}}>작성자</th>
             <th class="align-middle"  style={{fontWeight: '800', fontSize: '18px'}}>작성일자</th>
-            <th class="align-middle"  style={{fontWeight: '800', fontSize: '18px'}}>조회수</th>
           </tr>
         </thead>
         <tbody>
-          <NoticeTableBody />
+          {
+              this.state.data ? this.state.data.map((item, i) => {
+                return (
+                  <NoticeTableBody 
+                    num={item.num}
+                    isNotice={item.isNotice}
+                    title={item.title}
+                    addDate={item.addDate}
+                  />
+                )
+              }) : 
+              <tr>
+                <td colSpan="9" align="center">
+                  <CircularProgress color="secondary" />
+                </td>
+              </tr>
+            }
         </tbody>
       </table>
     );
