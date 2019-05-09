@@ -5,7 +5,11 @@ import axios from 'axios';
 
 export default class NoticeWriteForm extends Component {
   state = {
-    checked: false
+    title: '제목없음',
+    contents: '내용없음',
+    isNotice: false,
+    files: [],
+    name : ''
   }
 
 //  등록하기 눌렀을 때 
@@ -15,26 +19,24 @@ handleFormSubmit = (e) => {
 
   const config = {
     headers: {
-      'content-type': 'multipart/form-data; '
+      'content-type': 'multipart/form-data;'
     }
   }
 
   const formData = new FormData();
-  formData.append('type', this.state.type);
   formData.append('title', this.state.title);
   formData.append('contents', this.state.contents);
-  formData.append('Announcement', this.state.Announcement ? 1 : 0);
+  formData.append('isNotice', this.state.isNotice ? 1 : 0);
+  // formData.append('file',this.state.files);
+
+  for (const file of this.state.files) {
+    formData.append('file', file);
+  }
 
   //  컨트롤러에게 데이터 전송
   axios.post(url, formData, config)
       .then(res => console.log(res))
       .catch(err => console.log(err));
-  }
-
-  handleChange = () => {
-    this.setState({
-      checked: !this.state.checked
-    })
   }
 
   //  폼 안의 내용이 변경될때마다
@@ -46,9 +48,7 @@ handleFormSubmit = (e) => {
 
   //  체크박스 누를때마다
   handleCheckChange = (e) => {
-    if (e.target.name == 'Announcement') {
-      this.setState({Announcement : !this.state.Announcement});
-    }
+    this.setState({isNotice : !this.state.isNotice});
   }
 
   //  파일 내용 변경시
@@ -59,24 +59,25 @@ handleFormSubmit = (e) => {
       temp.push(file);
     }
     this.setState({
-      fileList : temp
+      files : temp
     })
   }
 
   render() {
     return (
       <form id="write_Form" onSubmit={this.handleFormSubmit} class="container">
-        <input type="text" class="form-control" placeholder="제목" onChange={this.handleFormChange}/>
-        <textarea class="form-control my-3" rows="20" placeholder="내용"onChange={this.handleFormChange} />
+        <input type="text" class="form-control" placeholder="제목" name="title" onChange={this.handleFormChange}/>
+        <textarea class="form-control my-3" rows="20" placeholder="내용" name ="contents" onChange={this.handleFormChange} />
 
-        <input type="file" class="form-control-file my-2 w-100" />
+        <input type="file" class="form-control-file my-2 w-100" name="file" onChange={this.handleFileChange} multiple="multiple" /> 
         <FormControlLabel
           control={
             <Checkbox
-              checked={this.state.checked}
-              onChange={this.handleChange}
+              checked={this.state.isNotice}
+              onChange={this.handleCheckChange}
               color="primary"
               style={{borderColor: 'white'}}
+              name="isNotice"
             />
           }
           label="공지글로 등록"
