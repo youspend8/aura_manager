@@ -45,7 +45,11 @@ handleFormSubmit = (e) => {
   //  컨트롤러에게 데이터 전송
   axios.post(url, formData, config)
       .then(res => {
-        console.log(res)
+        if(res.data === true) {
+          this.setState({redirect: true})
+        } else {
+
+        }
       })
       .catch(err => console.log(err));
   }

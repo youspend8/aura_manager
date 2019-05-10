@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
 import { Redirect } from 'react-router';
 
 const style = {
@@ -14,7 +15,27 @@ export default class NoticePostForm extends Component {
   state = {
     redirect: false
   }
-  
+  //삭제
+  submit = e => {
+    e.preventDefault();
+
+    confirmAlert({
+      title: '게시글 삭제',
+      message: '게시글을 삭제하시겠습니까?',
+      closeOnClickOutside: false,
+      buttons: [
+        {
+          label: '삭제',
+          onClick: () => {}
+        },
+        {
+          label: '취소',
+          onClick: () => {}
+        }
+      ]
+    });
+  };
+
   handleRedirect = () => {
     this.setState({
       redirect: true
@@ -63,8 +84,13 @@ export default class NoticePostForm extends Component {
         </div>
 
         <div className="text-right">
-          <input type="button" className="text-right btn btn-success" value="목록" onClick={this.handleRedirect}></input>
+          <input type="button" className="text-right btn btn-outline-default waves-effect" value="목록" onClick={this.handleRedirect}></input>
           {/* <input type="button" className="btn indigo" value="수정하기"></input> */}
+        </div>
+        <div className="text-center">
+          <div class="mt-5">
+            <a href="#" class="text-danger" onClick={this.submit}>공지사항 삭제</a>
+          </div>
         </div>
       </div> 
     );

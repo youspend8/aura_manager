@@ -15,7 +15,6 @@ export default class NoticePost extends Component {
         this.setState(res)
       })
       .catch(err => {
-        console.log(err.data)
         console.log(err)
       });
   }
