@@ -8,9 +8,12 @@ export default class NoticePost extends Component {
   }
   
   componentDidMount() {
-    const url = '/notice/' + this.props.match.params.num;
+    const url = '/api/notice/' + this.props.match.params.num;
     axios.get(url)
-      .then(res => this.setState(res))
+      .then(res => {
+        console.log(res.data)
+        this.setState(res)
+      })
       .catch(err => console.log(err));
   }
 
@@ -19,18 +22,15 @@ export default class NoticePost extends Component {
     return (
       <div className="card-body page-body px-5" style={{backgroundColor: 'RGB(48,61,71)'}}>
         {
-          data ? data.map((item, index) => {
-            return (
+          data ?
               <NoticePostForm
-                num={this.state.num} 
-                title={this.state.title}
-                content={this.state.content}
-                writeDate={this.state.writeDate} 
-                writer={this.state.writer}
-                category={this.state.category}
+                num={data.NUM} 
+                isNotice={data.ISNOTICE == 1 ? "공지사항" : "이벤트"}
+                title={data.TITLE }
+                content={data.CONTENTS}
+                writeDate={data.WRITERDATE.substring(0,12)} 
               />
-            )
-          }) : ''
+         : ''
         }
       </div>
     );

@@ -27,15 +27,22 @@ export default class NoticeTableBody extends Component {
           {this.props.num}
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          {this.props.isNotice}
+          {this.props.isNotice == 1 ? '공지사항' : '이벤트'}
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          <Link to={`/notice/${this.props.num}/`} class="text-light">
+          <Link to={`/notice/${this.props.num}`} class="text-light">
             {this.props.title}
           </Link>
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          {this.props.addDate}
+        <Link to={`/notice/${this.props.num}`} class="text-light">
+          {
+            this.props.contents.length >= 100 ? this.props.contents.substring(0, 100) : this.props.contents
+          }
+        </Link>
+        </td>
+        <td class="align-middle p-1" style={{fontWeight: '800'}}>
+          {this.props.writeDate.substring(0, 10)}
         </td>
       </tr>
     );

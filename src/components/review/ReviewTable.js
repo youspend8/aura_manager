@@ -17,7 +17,10 @@ export default class ReviewTable extends Component {
   componentDidMount() {
     const url = '/api/review/list';
     axios.get(url)
-      .then(res => this.setState(res))
+      .then(res => {
+        console.log(res.data)
+        this.setState(res)
+      })
       .catch(err => console.log(err));
     console.log(this.state.data ? true : false)
     setTimeout(() => {
