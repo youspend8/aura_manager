@@ -58,6 +58,7 @@ export default class NoticeTable extends Component {
                   title={item.title}
                   contents={item.contents}
                   writeDate={item.writerDate}
+                  files={item.files}
                 />
               )
             }) : 

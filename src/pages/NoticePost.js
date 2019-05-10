@@ -14,7 +14,10 @@ export default class NoticePost extends Component {
         console.log(res.data)
         this.setState(res)
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err.data)
+        console.log(err)
+      });
   }
 
   render() {
@@ -28,7 +31,8 @@ export default class NoticePost extends Component {
                 isNotice={data.ISNOTICE == 1 ? "공지사항" : "이벤트"}
                 title={data.TITLE }
                 content={data.CONTENTS}
-                writeDate={data.WRITERDATE.substring(0,12)} 
+                writeDate={data.WRITERDATE.substring(0,12)}
+                files={data.FILES}
               />
          : ''
         }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 
 const style = {
   header: {
@@ -10,10 +11,19 @@ const style = {
   }
 }
 export default class NoticePostForm extends Component {
-
+  state = {
+    redirect: false
+  }
+  
+  handleRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
   render() {
     return (
       <div>
+        {this.state.redirect ? <Redirect to="/notice" /> : ''}
         <header className="text-center py-4 m-0" style={style.header}>
           <h3 className="m-0">
             {this.props.title}
@@ -41,11 +51,22 @@ export default class NoticePostForm extends Component {
             {this.props.content}
           </div>
         </section>
-        <div className="text-right">
-          <input type="button" className="text-right btn btn-success" value="목록" onclick="location.href='/api/notice/list'"></input>
-          <input type="button" className="btn indigo" value="수정하기"></input>
+
+        <div class="d-flex flex-wrap">
+          {
+            this.props.files.map((item, index) => {
+              return (
+                <img src={item} className="col-2 h-100" />
+              );
+            })
+          }
         </div>
-      </div>
+
+        <div className="text-right">
+          <input type="button" className="text-right btn btn-success" value="목록" onClick={this.handleRedirect}></input>
+          {/* <input type="button" className="btn indigo" value="수정하기"></input> */}
+        </div>
+      </div> 
     );
   }
 }

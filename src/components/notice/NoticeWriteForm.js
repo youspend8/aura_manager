@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import axios from 'axios';
+import { Redirect } from 'react-router';
 
 export default class NoticeWriteForm extends Component {
   state = {
@@ -9,11 +10,19 @@ export default class NoticeWriteForm extends Component {
     contents: '내용없음',
     isNotice: false,
     files: [],
-    name : ''
+    name : '',
+    redirect: false
+  }
+
+  handleRedirect = () => {
+    this.setState({
+      redirect: true
+    })
   }
 
 //  등록하기 눌렀을 때 
 handleFormSubmit = (e) => {
+
   e.preventDefault();
   const url = '/api/notice/write';
 
@@ -35,7 +44,9 @@ handleFormSubmit = (e) => {
 
   //  컨트롤러에게 데이터 전송
   axios.post(url, formData, config)
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res)
+      })
       .catch(err => console.log(err));
   }
 
@@ -68,7 +79,7 @@ handleFormSubmit = (e) => {
       <form id="write_Form" onSubmit={this.handleFormSubmit} class="container">
         <input type="text" class="form-control" placeholder="제목" name="title" onChange={this.handleFormChange}/>
         <textarea class="form-control my-3" rows="20" placeholder="내용" name ="contents" onChange={this.handleFormChange} />
-
+        {this.state.redirect ? <Redirect to="/notice" /> : ''}
         <input type="file" class="form-control-file my-2 w-100" name="file" onChange={this.handleFileChange} multiple="multiple" /> 
         <FormControlLabel
           control={
@@ -85,6 +96,7 @@ handleFormSubmit = (e) => {
         <div class="text-center">
           <button type="submit" class="btn indigo">글쓰기</button>
           <button type="reset" class="btn btn-light">다시작성</button>
+          <input type="button" className="btn btn-success" value="목록" onClick={this.handleRedirect}></input>
         </div>
       </form>
     );
