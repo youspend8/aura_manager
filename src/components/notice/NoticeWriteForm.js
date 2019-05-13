@@ -23,7 +23,7 @@ export default class NoticeWriteForm extends Component {
 //  등록하기 눌렀을 때 
 handleFormSubmit = (e) => {
 
-  e.preventDefault();
+  // e.preventDefault();
   const url = '/api/notice/write';
 
   const config = {

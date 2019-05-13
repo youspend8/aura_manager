@@ -11,7 +11,6 @@ export default class NoticePost extends Component {
     const url = '/api/notice/' + this.props.match.params.num;
     axios.get(url)
       .then(res => {
-        console.log(res.data)
         this.setState(res)
       })
       .catch(err => {

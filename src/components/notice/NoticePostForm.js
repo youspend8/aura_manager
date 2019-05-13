@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { Redirect } from 'react-router';
+import axios from 'axios';
 
 const style = {
   header: {
@@ -18,21 +19,17 @@ export default class NoticePostForm extends Component {
   //삭제
   submit = e => {
     e.preventDefault();
-
-    confirmAlert({
-      title: '게시글 삭제',
-      message: '게시글을 삭제하시겠습니까?',
-      closeOnClickOutside: false,
-      buttons: [
-        {
-          label: '삭제',
-          onClick: () => {}
-        },
-        {
-          label: '취소',
-          onClick: () => {}
+    const url = '/api/notice/' + this.props.num;
+    axios.delete(url)
+      .then(res => {
+        console.log(this.props.num); // 이거 게시물 num 숫자 잘나온다.
+        console.dir(res);
+        if(res.data == true){
+          this.handleRedirect();
         }
-      ]
+      })
+      .catch(err => {
+        console.log(err)
     });
   };
 
@@ -41,6 +38,7 @@ export default class NoticePostForm extends Component {
       redirect: true
     })
   }
+
   render() {
     return (
       <div>
@@ -88,9 +86,11 @@ export default class NoticePostForm extends Component {
           {/* <input type="button" className="btn indigo" value="수정하기"></input> */}
         </div>
         <div className="text-center">
+        
           <div class="mt-5">
             <a href="#" class="text-danger" onClick={this.submit}>공지사항 삭제</a>
           </div>
+
         </div>
       </div> 
     );
