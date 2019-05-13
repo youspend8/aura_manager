@@ -31,7 +31,9 @@ export default class NoticeTableBody extends Component {
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
           <Link to={`/notice/${this.props.num}`} class="text-light">
-            {this.props.title}
+            {
+              this.props.title.length >= 12 ? this.props.title.substring(0, 12) : this.props.title
+            }
           </Link>
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
