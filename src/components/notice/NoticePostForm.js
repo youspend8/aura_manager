@@ -19,17 +19,31 @@ export default class NoticePostForm extends Component {
   //삭제
   submit = e => {
     e.preventDefault();
-    const url = '/api/notice/' + this.props.num;
-    axios.delete(url)
-      .then(res => {
-        console.log(this.props.num); // 이거 게시물 num 숫자 잘나온다.
-        console.dir(res);
-        if(res.data == true){
-          this.handleRedirect();
+    confirmAlert({
+      title: '게시글 삭제',
+      message: '게시글을 삭제하시겠습니까?',
+      closeOnClickOutside: false,
+      buttons: [
+        {
+          label: '삭제',
+          onClick: () => {
+            const url = '/api/notice/' + this.props.num;
+            axios.delete(url)
+              .then(res => {
+                if(res.data == true){
+                  this.handleRedirect();
+                }
+              })
+              .catch(err => {
+                console.log(err)
+            });
+          }
+        },
+        {
+          label: '취소',
+          onClick: () => {}
         }
-      })
-      .catch(err => {
-        console.log(err)
+      ]
     });
   };
 
@@ -64,7 +78,7 @@ export default class NoticePostForm extends Component {
             게시물 번호 : {this.props.num}
           </div>
         </div>
-        
+
         <section class="container">
           <div className="text-center my-5">
             {this.props.content}
@@ -75,7 +89,7 @@ export default class NoticePostForm extends Component {
           {
             this.props.files.map((item, index) => {
               return (
-                <img src={item} className="col-2 h-100" />
+                <img src={item} className="col-3" style={{height: '350px'}}/>
               );
             })
           }
