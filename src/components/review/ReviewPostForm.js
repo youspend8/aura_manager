@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 const style = {
   header: {
@@ -11,8 +13,10 @@ const style = {
 
 export default class ReviewPostForm extends Component {
   state = {
-    menu : ''
+    menu : '',
+    redirect : false
   }
+
   submit = e => {
     e.preventDefault();
     confirmAlert({
@@ -22,7 +26,18 @@ export default class ReviewPostForm extends Component {
       buttons: [
         {
           label: '삭제',
-          onClick: () => {}
+          onClick: () => {
+            const url = '/api/review/' + this.props.num;
+            axios.delete(url)
+              .then(res => {
+                if(res.data == true){
+                  this.handleRedirect();
+                }
+              })
+              .catch(err => {
+                console.log(err)
+            });
+          }
         },
         {
           label: '취소',
@@ -32,9 +47,16 @@ export default class ReviewPostForm extends Component {
     });
   };
 
+  handleRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
   render() {
     return (
       <div className="text-center">
+        {this.state.redirect ? <Redirect to="/review" /> : ''}
         <header className="text-center py-4 m-0" style={style.header}>
           <h3 className="d-flex align-items-center justify-content-center m-0">
             {this.props.title}

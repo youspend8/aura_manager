@@ -4,11 +4,15 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Checkbox from '@material-ui/core/Checkbox';
 import axios from 'axios';
+import { confirmAlert } from 'react-confirm-alert';
+import { Redirect } from 'react-router-dom';
 
 export default class ReviewWriteForm extends Component {
   state = {
+    redirect : false,
     type: 1,
-    title : '',
+    title : '제목없음',
+    contents : '내용없음',
     address1 : '서울',
     address2 : '',
     address3 : '',
@@ -32,10 +36,18 @@ export default class ReviewWriteForm extends Component {
         price : ''
       }
     ],
+    release : '',
     price : '',
-    sub_Category1 : '',
-    sub_Category2 : '',
-    sub_Category3 : '',
+    model : '',
+    sub_Category1 : 0,
+    sub_Category2 : 0,
+    sub_Category3 : 0,
+    options : [
+      {
+        key : '',
+        value : ''
+      }
+    ],
     fileList : []
   }
 
@@ -53,7 +65,7 @@ export default class ReviewWriteForm extends Component {
     const formData = new FormData();
     formData.append('type', this.state.type);
     formData.append('title', this.state.title);
-    formData.append('contents', this.state.contents);
+    formData.append('contents', this.state.contents == null ? '내용없음' : this.state.contents);
     formData.append('address1', this.state.address1);
     formData.append('address2', this.state.address2);
     formData.append('address3', this.state.address3);
@@ -66,6 +78,12 @@ export default class ReviewWriteForm extends Component {
     formData.append('takeOut', this.state.takeOut ? 1 : 0);
     formData.append('hospitalCategory', this.state.hospital_Category);
     formData.append('medicalCategory', this.state.medical_Category);
+    formData.append('release', this.state.release);
+    formData.append('price', this.state.price);
+    formData.append('model', this.state.model);
+    formData.append('subCategory1', this.state.sub_Category1);
+    formData.append('subCategory2', this.state.sub_Category2);
+    formData.append('subCategory3', this.state.sub_Category3);
 
     let subMedicalCategory = '';
     this.state.sub_Medical_Category.map((item, i) => {
@@ -81,6 +99,13 @@ export default class ReviewWriteForm extends Component {
     });
     formData.append('menu', "{\"menu\" :[" + menu + "]}");
     
+    let options = '';
+    this.state.options.map((item, i) => {
+      options += "{\"key\": \"" + item.key + "\",\"value\": \"" + item.value + "\"}";
+      options += (i == this.state.options.length - 1) ? '' : ',';
+    });
+    formData.append('options', "{\"options\" :[" + options + "]}");
+
     this.state.fileList.forEach((file, index) => {
       formData.append('file', file);
     })
@@ -88,8 +113,36 @@ export default class ReviewWriteForm extends Component {
     //  컨트롤러에게 데이터 전송
     console.log(menu);
     axios.post(url, formData, config)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then(res => {
+        if (res.data === true) {
+          confirmAlert({
+            title: '등록 완료',
+            message: '리뷰글 등록이 정상적으로 처리되었습니다.',
+            closeOnClickOutside: false,
+            buttons: [
+              {
+                label: '확인',
+                onClick: () => {
+                  this.setState({redirect : true});
+                }
+              }
+            ]
+          });
+        }
+      })
+      .catch(err => {
+        confirmAlert({
+          title: '등록 실패',
+          message: '리뷰글 등록에 실패했습니다.',
+          closeOnClickOutside: false,
+          buttons: [
+            {
+              label: '확인',
+              onClick: () => {}
+            }
+          ]
+        });
+      });
   }
 
   //  폼 안의 내용이 변경될때마다
@@ -151,6 +204,29 @@ export default class ReviewWriteForm extends Component {
     });
   }
 
+  //  옵션 추가하기 버튼 클릭시
+  handleOptionAdd = () => {
+    this.setState({
+      options : this.state.options.concat({
+        key : '',
+        value : ''
+      })
+    });
+  }
+
+  //  옵션 내용을 변경할 때
+  handleOptionChange = (index) => (e) => {
+    const temp = [...this.state.options];
+    temp.map((item, i) => {
+      if (i === index) {
+        item[e.target.name] = e.target.value;
+      }
+    });
+    this.setState({
+      options : temp
+    });
+  }
+
   //  파일 내용 변경시
   handleFileChange = (e) => {
     const temp = [];
@@ -166,6 +242,9 @@ export default class ReviewWriteForm extends Component {
   render() {
     return (
       <form class="container d-flex justify-content-center flex-column" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+        {
+          this.state.redirect ? <Redirect to="/review" /> : ''
+        }
         <input type="text" class="form-control rounded-0 w-100 my-3" name="title" placeholder="제목" onChange={this.handleFormChange} />
         <textarea class="form-control rounded-0 mb-4" name="contents" placeholder="내용" rows="10" onChange={this.handleFormChange}></textarea>
         <div>
@@ -183,7 +262,9 @@ export default class ReviewWriteForm extends Component {
                 handleFormChange={this.handleFormChange}
               /> : 
               this.state.type == 3 ?
-              <ProductorReviewForm /> : ''
+              <ProductorReviewForm 
+                handleFormChange={this.handleFormChange}
+              /> : ''
             }
             {
               this.state.type == 1 ? 
@@ -205,7 +286,10 @@ export default class ReviewWriteForm extends Component {
               /> :  
               this.state.type == 3 ?
               <DigitalReviewForm 
+                options={this.state.options}
                 handleFormChange={this.handleFormChange}
+                handleOptionChange={this.handleOptionChange}
+                handleOptionAdd={this.handleOptionAdd}
               /> : ''
             }
           </table>
@@ -298,7 +382,23 @@ class RestaurantReviewForm extends Component {
           <td>카테고리</td>
           <td>
             <select class="form-control" name="restaurant_category" onChange={this.props.handleFormChange}>
-              <option value={0}>한식</option>
+              <option value={0}>뷔페</option>
+              <option value={1}>한식</option>
+              <option value={2}>양식</option>
+              <option value={3}>중식</option>
+              <option value={4}>일식</option>
+              <option value={5}>분식</option>
+              <option value={6}>카페</option>
+              <option value={7}>치킨</option>
+              <option value={8}>피자</option>
+              <option value={9}>중국집</option>
+              <option value={10}>족발·보쌈</option>
+              <option value={11}>도시락</option>
+              <option value={12}>패스트푸드</option>
+              <option value={13}>테이크아웃</option>
+              <option value={14}>프랜차이즈</option>
+              <option value={15}>맥주</option>
+              <option value={16}>호프</option>
             </select>
           </td>
           <td class="align-middle py-0" colSpan="3">
@@ -431,7 +531,7 @@ class ProductorReviewForm extends Component {
         <tr>
           <td>출시일</td>
           <td>
-            <input type="date" class="form-control" name="price" onChange={this.props.handleFormChange}></input>
+            <input type="date" class="form-control" name="release" onChange={this.props.handleFormChange}></input>
           </td>
           <td>가격</td>
           <td>
@@ -450,7 +550,7 @@ class DigitalReviewForm extends Component {
         <tr>
           <td>모델명</td>
           <td>
-            <input type="text" class="form-control" name="model"></input>
+            <input type="text" class="form-control" name="model" onChange={this.props.handleFormChange}></input>
           </td>
         </tr>
         <tr>
@@ -470,6 +570,26 @@ class DigitalReviewForm extends Component {
                 <option value="카테고리2">카테고리2</option>
               </select>
             </div>
+          </td>
+        </tr>
+        <tr>
+          <td>옵션</td>
+          <td colSpan="2">
+            {
+              this.props.options.map((item, index) => {
+                return (
+                  <div class="form-inline mb-2">
+                    <input type="text" class="form-control col-5" name="key" placeholder="옵션명" onChange={this.props.handleOptionChange(index)}></input>
+                    <input type="text" class="form-control col-5 mx-3" name="value" placeholder="내용" onChange={this.props.handleOptionChange(index)}></input>
+                  </div>
+                );
+              })
+            }
+          </td>
+          <td colSpan="1" class="align-top pt-4 text-left">
+            <a onClick={this.props.handleOptionAdd}>
+              옵션추가하기
+            </a>
           </td>
         </tr>
       </tbody>
