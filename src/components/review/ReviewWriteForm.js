@@ -39,7 +39,7 @@ export default class ReviewWriteForm extends Component {
     release : '',
     price : '',
     model : '',
-    sub_Category1 : 0,
+    sub_Category1 : "0",
     sub_Category2 : 0,
     sub_Category3 : 0,
     options : [
@@ -48,9 +48,18 @@ export default class ReviewWriteForm extends Component {
         value : ''
       }
     ],
-    fileList : []
+    fileList : [],
+    digitalCategoryList : []
   }
 
+  componentDidMount() {
+    axios.get('/api/review/write')
+      .then(res => {
+        console.log(res.data)
+        this.setState({digitalCategoryList : res.data})
+      })
+      .catch(err => console.log(err));
+  }
   //  등록하기 눌렀을 때 
   handleFormSubmit = (e) => {
     e.preventDefault();
@@ -290,6 +299,9 @@ export default class ReviewWriteForm extends Component {
                 handleFormChange={this.handleFormChange}
                 handleOptionChange={this.handleOptionChange}
                 handleOptionAdd={this.handleOptionAdd}
+                sub_Category1={this.state.sub_Category1}
+                sub_Category2={this.state.sub_Category2}
+                digitalCategoryList={this.state.digitalCategoryList}
               /> : ''
             }
           </table>
@@ -558,16 +570,34 @@ class DigitalReviewForm extends Component {
           <td colSpan="3">
             <div class="form-inline">
               <select class="form-control w-25" name="sub_Category1" onChange={this.props.handleFormChange}>
-                <option value="카테고리1">카테고리1</option>
-                <option value="카테고리2">카테고리2</option>
+                <option>대분류</option>
+                {
+                  this.props.digitalCategoryList ? this.props.digitalCategoryList[0].map((item, index) => {
+                    return (
+                      <option value={item.num}>{item.name}</option>
+                    );
+                  }) : ''
+                }
               </select>
               <select class="form-control w-25 mx-3" name="sub_Category2" onChange={this.props.handleFormChange}>
-                <option value="카테고리1">카테고리1</option>
-                <option value="카테고리2">카테고리2</option>
+                <option checked="checked">중분류</option>
+                {
+                  this.props.digitalCategoryList ? this.props.digitalCategoryList[1].map((item, index) => {
+                    return (
+                      item.category1Num == this.props.sub_Category1 ? <option value={item.num}>{item.name}</option> : ''
+                    )
+                  }) : ''
+                }
               </select>
               <select class="form-control w-25" name="sub_Category3" onChange={this.props.handleFormChange}>
-                <option value="카테고리1">카테고리1</option>
-                <option value="카테고리2">카테고리2</option>
+                <option checked="checked">소분류</option>
+                {
+                  this.props.digitalCategoryList ? this.props.digitalCategoryList[2].map((item, index) => {
+                    return (
+                      item.category2Num == this.props.sub_Category2 ? <option value={item.num}>{item.name}</option> : ''
+                    )
+                  }) : ''
+                }
               </select>
             </div>
           </td>

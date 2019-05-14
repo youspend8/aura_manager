@@ -22,7 +22,6 @@ export default class ReviewTable extends Component {
         this.setState(res)
       })
       .catch(err => console.log(err));
-    console.log(this.state.data ? true : false)
     setTimeout(() => {
       console.log(this.state.data)
     }, 3000);
