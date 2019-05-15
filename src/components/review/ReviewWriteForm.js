@@ -21,7 +21,7 @@ export default class ReviewWriteForm extends Component {
     tel2 : '',
     tel3 : '',
     waitingTime : '5분',
-    serviceTime : '',
+    serviceTime : '내용없음',
     delivery : false,
     takeOut : false,
     restaurant_category : 0,
@@ -364,6 +364,7 @@ class PlaceReviewForm extends Component {
           <td>웨이팅시간</td>
           <td>
             <select class="form-control" name="waitingTime" onChange={this.props.handleFormChange}>
+              <option value="없음">없음</option>
               <option value="5분">5분</option>
               <option value="10분">10분</option>
               <option value="15분">15분</option>
