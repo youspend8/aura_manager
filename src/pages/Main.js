@@ -5,10 +5,8 @@ import ReviewCount from 'components/dashboard/ReviewCount';
 import UserStats from 'components/dashboard/UserStats';
 import ServiceStats from 'components/dashboard/ServiceStats';
 import GenderStats from 'components/dashboard/GenderStats';
-import YearUserStats from 'components/dashboard/YearUserStats';
-import PopUserRanking from 'components/dashboard/PopUserRanking';
 import PopReview from 'components/dashboard/PopReview';
-import AdminUpdate from 'components/dashboard/AdminUpdate';
+import UserRegStats from '../components/dashboard/UserRegStats';
 
 export default class Main extends Component {
 
@@ -18,13 +16,10 @@ export default class Main extends Component {
         <Visitor />
         <Repost />
         <ReviewCount />
-        <UserStats />
-        <ServiceStats />
-        <GenderStats />
-        <YearUserStats />
-        <PopUserRanking />
         <PopReview />
-        <AdminUpdate />
+        <UserStats />
+        <GenderStats />
+        <UserRegStats />
       </div>
     );
   }

@@ -13,8 +13,9 @@ export default class Repost extends Component {
           </a>
         </div>
 
-        <div class="card-body">
-
+        <div class="card-body d-flex justify-content-center align-items-center">
+          <span style={{fontSize: '60px', fontWeight: 'bold'}}>0</span>
+          <span style={{fontSize: '30px', marginLeft: '5px'}}> 건</span>
         </div>
       </div>
     );

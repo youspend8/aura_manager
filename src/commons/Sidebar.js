@@ -47,28 +47,11 @@ export default class Sidebar extends Component {
 
             {/* 리뷰게시글 관리 */}
             <li class="nav-item d-flex justify-content-between align-items-center">
-              <a href="#" class="nav-link collapse" data-target="#reviewCollapse" data-toggle="collapse">
-              <i class="fas fa-clipboard-list mr-3"></i>
+              <Link to="/review" class="nav-link">
+                <i class="fas fa-clipboard-list mr-3"></i>
                 리뷰게시글관리
-              </a>
-              <i class="fas fa-angle-right"></i>
+              </Link>
             </li>
-            <div class="collapse" id="reviewCollapse">
-              <ul class="navbar-nav flex-column w-100">
-                <li class="pl-4 nav-item d-flex justify-content-between align-items-center">
-                  <Link to="/review" class="nav-link">
-                    <i class="fas fa-folder mr-3"></i>
-                    리뷰게시글
-                  </Link>
-                </li>
-                <li class="pl-4 nav-item d-flex justify-content-between align-items-center">
-                  <Link to="/comment" class="nav-link">
-                    <i class="fas fa-folder mr-3"></i>
-                    리뷰댓글
-                  </Link>
-                </li>
-              </ul>
-            </div>
             
             {/* 회원관리 */}
             <li class="nav-item d-flex justify-content-between align-items-center">

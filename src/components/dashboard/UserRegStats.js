@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 const currDate = new Date();
 const dateList = [];
@@ -8,7 +8,7 @@ for (var i = 6; i >= 0; i--) {
   dateList.push((currDate.getMonth() + 1) + '/' + (currDate.getDate() - i));
 }
 
-export default class UserStats extends Component {
+export default class UserRegStats extends Component {
   state = {
    data : {
       labels: dateList,
@@ -71,7 +71,7 @@ export default class UserStats extends Component {
         </div>
 
         <div class="card-body">
-          <Bar data={this.state.data} options={this.state.options}></Bar>
+          <Line data={this.state.data} options={this.state.options}></Line>
 
         </div>
       </div>
