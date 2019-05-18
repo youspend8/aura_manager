@@ -60,7 +60,7 @@ export default class UserStats extends Component {
 
   render() {
     return (
-      <div class="card col-4">
+      <div class="card col-3">
         <div class="card-header d-flex justify-content-between">
           <h5 class="card-title m-0">
             회원 증감수
