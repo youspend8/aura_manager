@@ -1,30 +1,15 @@
 import React, { Component } from 'react';
 import ReviewTableBody from 'components/review/ReviewTableBody';
 import Checkbox from '@material-ui/core/Checkbox';
-import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default class ReviewTable extends Component {
   state = {
-    checked: false,
-    data: ''
+    checked: false
   }
 
   handleChange = () => {
     this.setState({checked : !this.state.checked});
-  }
-
-  componentDidMount() {
-    const url = '/api/review/list';
-    axios.get(url)
-      .then(res => {
-        console.log(res.data)
-        this.setState(res)
-      })
-      .catch(err => console.log(err));
-    setTimeout(() => {
-      console.log(this.state.data)
-    }, 3000);
   }
 
   render() {
@@ -52,11 +37,11 @@ export default class ReviewTable extends Component {
         </thead>
         <tbody>
           {
-            this.state.data ? this.state.data.map((item, i) => {
+            this.props.data ? this.props.data.map((item, i) => {
               return (
                 <ReviewTableBody 
                   num={item.num}
-                  category={item.category}
+                  type={item.type}
                   title={item.title}
                   addDate={item.addDate}
                   goods={item.goods}

@@ -14,7 +14,7 @@ export default class Visitor extends Component {
         </div>
 
         <div class="card-body d-flex justify-content-center align-items-center">
-          <span style={{fontSize: '50px', fontWeight: 'bold'}}>145,222</span>
+          <span style={{fontSize: '50px', fontWeight: 'bold'}}>254</span>
           <span style={{fontSize: '20px', marginLeft: '5px'}}> 명</span>
         </div>
       </div>

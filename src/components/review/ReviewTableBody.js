@@ -29,7 +29,7 @@ export default class ReviewTableBody extends Component {
           {this.props.category == 1 ? '음식점' : this.props.category == 2 ? '병원' : '전자제품'}
         </td>
         <td class="align-middle p-1" style={{fontWeight: '800'}}>
-          <Link to={`/review/${this.props.num}/${this.props.category}`} class="text-light">
+          <Link to={`/review/${this.props.num}/${this.props.type}`} class="text-light">
             {this.props.title}
           </Link>
         </td>

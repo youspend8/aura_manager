@@ -46,7 +46,9 @@ export default class Main extends Component {
   __getReviewCount = () => {
     const url = `/api/review/todayReview`;
     axios.get(url)
-      .then(res => this.setState({reviewCount: res.data}))
+      .then(res => {
+        console.log(res)
+        this.setState({reviewCount: res.data})})
       .catch(err => console.log(err));
   }
   
